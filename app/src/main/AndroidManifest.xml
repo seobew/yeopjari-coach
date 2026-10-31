@@ -17,7 +17,7 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".CoachActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density"
             android:exported="true">
             <intent-filter>
@@ -25,6 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density"
+            android:exported="true" />
 
     </application>
 

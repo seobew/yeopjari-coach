@@ -62,10 +62,12 @@ class CoachEngine(
                 routeId = null; lastHeadKey = null
             }
             is CoachEvent.DestinationArrived -> closeWindow(forceExcluded = false)
-            is CoachEvent.GearChanged -> if (event.gear == GearState.PARK && session.isNotEmpty()) {
+            is CoachEvent.GearChanged -> if (event.gear == GearState.PARK) {
                 closeWindow(forceExcluded = false)
-                emit(CoachOutput.Summary(routeId, session.toList()))
-                session.clear()
+                if (session.isNotEmpty()) {
+                    emit(CoachOutput.Summary(routeId, session.toList()))
+                    session.clear()
+                }
             }
         }
     }

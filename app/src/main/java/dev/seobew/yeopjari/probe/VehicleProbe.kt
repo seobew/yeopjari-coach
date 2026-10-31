@@ -7,6 +7,7 @@ import ai.pleos.playground.vehicle.constant.area.SeatValue
 import ai.pleos.playground.vehicle.constant.area.TurnSignalValue
 import ai.pleos.playground.vehicle.constant.control.VehicleGear
 import ai.pleos.playground.vehicle.listener.GearSelectionListener
+import ai.pleos.playground.vehicle.listener.SeatBeltBuckledStateListener
 import ai.pleos.playground.vehicle.listener.TurnSignalStateListener
 import dev.seobew.yeopjari.domain.CoachEvent
 import dev.seobew.yeopjari.domain.GearState
@@ -16,7 +17,12 @@ import dev.seobew.yeopjari.domain.SignalState
  * Vehicle SDK → CoachEvent 어댑터. 방향지시등 변경 구독·상태 조회, 기어(주차 확인), 운전석 벨트.
  * 리스너 파라미터는 SDK가 @Nullable로 선언해 Kotlin에서 `?`가 필요하다.
  */
-class VehicleProbe(context: Context, private val log: ProbeLog, private val sink: (CoachEvent) -> Unit) {
+class VehicleProbe(
+    context: Context,
+    private val log: ProbeLog,
+    private val sink: (CoachEvent) -> Unit,
+    private val onBelt: (Boolean) -> Unit = {},
+) {
     private val vehicle = Vehicle(context.applicationContext)
 
     private val turnSignalListener = object : TurnSignalStateListener {
@@ -36,6 +42,15 @@ class VehicleProbe(context: Context, private val log: ProbeLog, private val sink
             gear?.let { sink(CoachEvent.GearChanged(now(), it.toDomain())) }
         }
         override fun onFailed(e: Exception) = log.log("Gear", "listener FAILED", e)
+    }
+
+    private val driverSeat = SeatArea(SeatValue.ROW_1_LEFT)
+    private val beltListener = object : SeatBeltBuckledStateListener {
+        override fun onSeatBeltBuckledStateUpdated(buckled: Boolean?) {
+            log.log("SeatBelt", "driver updated", buckled)
+            buckled?.let(onBelt)
+        }
+        override fun onFailed(e: Exception) = log.log("SeatBelt", "listener FAILED", e)
     }
 
     fun start() {
@@ -60,16 +75,19 @@ class VehicleProbe(context: Context, private val log: ProbeLog, private val sink
             registerGearSelection(gearListener)
         }
 
-        vehicle.getSeat().getCurrentSeatBeltBuckledState(
-            SeatArea(SeatValue.ROW_1_LEFT),
-            { log.log("SeatBelt", "driver buckled", it) },
-            { log.log("SeatBelt", "driver FAILED", it) })
+        vehicle.getSeat().apply {
+            getCurrentSeatBeltBuckledState(driverSeat,
+                { log.log("SeatBelt", "driver buckled", it); it?.let(onBelt) },
+                { log.log("SeatBelt", "driver FAILED", it) })
+            registerSeatBeltBuckledState(driverSeat, beltListener)
+        }
     }
 
     fun stop() {
         runCatching {
             vehicle.getTurnSignal().unregisterTurnSignalState(turnSignalListener)
             vehicle.getGear().unregisterGearSelection(gearListener)
+            vehicle.getSeat().unregisterSeatBeltBuckledState(driverSeat, beltListener)
             vehicle.release()
         }.onFailure { log.log("Vehicle", "release FAILED", it) }
     }

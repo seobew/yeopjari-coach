@@ -6,6 +6,7 @@ import ai.pleos.playground.navi.constants.NavigationStatus
 import ai.pleos.playground.navi.constants.TurnType
 import ai.pleos.playground.navi.constants.WaypointIndex
 import ai.pleos.playground.navi.data.DestinationArrivedInfo
+import ai.pleos.playground.navi.data.DestinationInfo
 import ai.pleos.playground.navi.data.RequestWaypointInfo
 import ai.pleos.playground.navi.data.RouteInfo
 import ai.pleos.playground.navi.data.RouteStartInfo
@@ -22,9 +23,13 @@ import dev.seobew.yeopjari.domain.TurnDirection
  * NaviHelper SDK → CoachEvent 어댑터.
  * 실측(10/31): TBTInfo.distance는 m, 경로 설정 시 회전 목록이 한 번에 온다. 주행 중 갱신 주기는 미확인.
  */
-class NaviProbe(context: Context, private val log: ProbeLog, private val sink: (CoachEvent) -> Unit) {
+class NaviProbe(
+    context: Context,
+    private val log: ProbeLog,
+    private val sink: (CoachEvent) -> Unit,
+    private val onDestination: (String?) -> Unit = {},
+) {
     private val navi = NaviHelper(context.applicationContext)
-    private var routeSeq = 0
 
     private val listener = object : NaviHelperEventListener {
         override fun onTBTInfo(tbtInfoList: List<TBTInfo>) {
@@ -34,9 +39,13 @@ class NaviProbe(context: Context, private val log: ProbeLog, private val sink: (
         override fun onNavigationStatus(status: NavigationStatus) = log.log("Navi", "onNavigationStatus", status)
         override fun onRouteStateInfo(routeStateInfo: RouteStateInfo) = log.log("Navi", "onRouteStateInfo", routeStateInfo)
         override fun onRouteStarted(routeStartInfo: RouteStartInfo) {
+            // 연습 시작은 사용자가 누른다(PracticeSession.start). 여기서는 목적지 이름만 갱신한다.
             log.log("Navi", "onRouteStarted", routeStartInfo)
-            // ponytail: 경로 식별은 목적지 이름 + 세션 순번. 같은 경로를 같은 키로 묶으려면 사용자가 고른 연습 경로 id로 바꿔야 한다.
-            sink(CoachEvent.RouteStarted(now(), "${routeStartInfo.name}#${++routeSeq}"))
+            navi.getDestinationInfo()
+        }
+        override fun onDestinationInfo(destinationInfo: DestinationInfo) {
+            log.log("Navi", "onDestinationInfo", destinationInfo)
+            onDestination(destinationInfo.name.takeIf { it.isNotBlank() })
         }
         override fun onRoutingCompleted() = log.log("Navi", "onRoutingCompleted")
         override fun onReRouteEnded() {
@@ -46,6 +55,7 @@ class NaviProbe(context: Context, private val log: ProbeLog, private val sink: (
         override fun onRouteEnded() = log.log("Navi", "onRouteEnded")
         override fun onRouteCancelled() {
             log.log("Navi", "onRouteCancelled")
+            onDestination(null)
             sink(CoachEvent.RouteCancelled(now()))
         }
         override fun onDestinationArrived(destinationArrivedInfo: DestinationArrivedInfo) {
@@ -61,6 +71,7 @@ class NaviProbe(context: Context, private val log: ProbeLog, private val sink: (
                 log.log("Navi", "connected")
                 navi.addListener(listener)
                 navi.getRouteStateInfo()
+                navi.getDestinationInfo()
                 navi.getTBTInfo()
             },
             onFailed = { log.log("Navi", "initialize FAILED", it) })
@@ -82,6 +93,8 @@ class NaviProbe(context: Context, private val log: ProbeLog, private val sink: (
                         poiId = "36khp2hdj2cfcm5nqhe3", poiName = "소프트웨어드림센터", poiSubId = "0",
                         address = "경기도 성남시 수정구 창업로40번길 6"))))
     }
+
+    fun getTBTInfo() = navi.getTBTInfo()
 
     fun requestReRoute() {
         log.log("Navi", "requestReRoute")

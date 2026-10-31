@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Handler
 import android.os.Looper
 import android.speech.tts.TextToSpeech
+import dev.seobew.yeopjari.coach.PracticeSession
 import dev.seobew.yeopjari.domain.CoachEngine
 import dev.seobew.yeopjari.domain.CoachEvent
 import dev.seobew.yeopjari.domain.CoachOutput
@@ -20,7 +21,7 @@ import java.util.Locale
  * SDK 연결은 프로세스당 한 번만. Activity에 두면 멀티윈도우 리사이즈로 onCreate가 반복돼
  * Vehicle.release()가 다른 인스턴스의 리스너까지 끊는다(P0 실측에서 확인).
  *
- * 이벤트 흐름: SDK 어댑터 / ScenarioPlayer → post() → CoachEngine → 로그·화면·TTS.
+ * 이벤트 흐름: SDK 어댑터 / ScenarioPlayer → post() → CoachEngine → PracticeSession(화면) · 로그 · TTS.
  */
 class ProbeApp : Application() {
     lateinit var log: ProbeLog
@@ -29,8 +30,9 @@ class ProbeApp : Application() {
     lateinit var store: JsonPracticeStore
     lateinit var engine: CoachEngine
     lateinit var scenarios: ScenarioPlayer
+    lateinit var session: PracticeSession
 
-    /** 화면이 구독하는 최근 발화·복기 요약. */
+    /** 개발자 화면용 최근 발화·복기 요약. */
     var lastSay: String = ""
         private set
     var lastSummary: String = ""
@@ -48,9 +50,14 @@ class ProbeApp : Application() {
 
         store = JsonPracticeStore(File(filesDir, "practice.json"))
         engine = CoachEngine(store, emit = ::onOutput)
+        // 연습 시작 시 내비의 현재 TBT 목록을 다시 받아 첫 평가 구간을 바로 열 수 있게 한다 (TBT는 경로 설정 때 한 번만 온다).
+        session = PracticeSession(
+            snapshot = store::snapshot,
+            emit = { post(it); if (it is CoachEvent.RouteStarted) navi.getTBTInfo() },
+            onChange = { onCoachChanged?.invoke() })
         scenarios = ScenarioPlayer(this, ::post)
-        vehicle = VehicleProbe(this, log, ::post).also { it.start() }
-        navi = NaviProbe(this, log, ::post).also { it.start() }
+        vehicle = VehicleProbe(this, log, ::post, onBelt = { main.post { session.onBelt(it) } }).also { it.start() }
+        navi = NaviProbe(this, log, ::post, onDestination = { main.post { session.onDestination(it) } }).also { it.start() }
 
         // Pleos TTS SDK는 Playground에서 '준비 중'. 플랫폼 TTS 엔진이 있으면 그걸로 소리만 낸다 — 없으면 화면 텍스트만.
         tts = TextToSpeech(this) { status ->
@@ -63,6 +70,9 @@ class ProbeApp : Application() {
     fun post(event: CoachEvent) {
         main.post {
             log.log("Event", event::class.simpleName ?: "?", event.toString().substringAfter('('))
+            session.onEvent(event)
+            // 일시정지 중에는 새 평가 구간을 열지 않는다. 신호·기어는 계속 본다.
+            if (session.paused && event is CoachEvent.TbtUpdated) return@post
             engine.on(event)
         }
     }
@@ -79,15 +89,12 @@ class ProbeApp : Application() {
             is CoachOutput.Summary -> {
                 val evaluated = out.results.filter { it.outcome != Outcome.EXCLUDED }
                 val confirmed = evaluated.count { it.outcome == Outcome.CONFIRMED }
-                val excluded = out.results.size - evaluated.size
-                val next = out.results.firstOrNull { it.outcome == Outcome.UNCONFIRMED }
-                    ?.let { "다음 연습: ${it.key.ordinal}번째 ${if (it.key.direction.name == "LEFT") "좌회전" else "우회전"}(${it.key.description}) 깜빡이" }
-                    ?: "다음 연습: 같은 경로를 한 번 더"
-                lastSummary = "깜빡이 확인 $confirmed / 평가 ${evaluated.size} (제외 $excluded) · $next"
+                lastSummary = "깜빡이 확인 $confirmed / 평가 ${evaluated.size} (제외 ${out.results.size - evaluated.size})"
                 lastSay = ""
                 log.log("Coach", "summary", lastSummary)
             }
         }
+        session.onOutput(out)
         onCoachChanged?.invoke()
     }
 }
