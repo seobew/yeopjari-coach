@@ -1,0 +1,24 @@
+{
+  "name": "장면 2 · 같은 경로 재연습 (1번 구간은 사용 확인 2회 기록을 미리 넣어 둠 → 짧은 예고)",
+  "routeId": "home-office",
+  "history": [
+    { "ordinal": 1, "direction": "RIGHT", "description": "창업로40번길", "outcomes": ["CONFIRMED", "CONFIRMED"] },
+    { "ordinal": 2, "direction": "LEFT", "description": "남부순환로", "outcomes": ["UNCONFIRMED"] }
+  ],
+  "events": [
+    { "t": 0,     "type": "routeStarted" },
+    { "t": 300,   "type": "signal", "value": "OFF" },
+    { "t": 1000,  "type": "tbt", "turns": [["RIGHT", 420, "창업로40번길"], ["LEFT", 1300, "남부순환로"], ["OTHER", 2600, "도착"]] },
+    { "t": 4000,  "type": "tbt", "turns": [["RIGHT", 140, "창업로40번길"], ["LEFT", 1020, "남부순환로"], ["OTHER", 2320, "도착"]] },
+    { "t": 6000,  "type": "signal", "value": "RIGHT" },
+    { "t": 8000,  "type": "tbt", "turns": [["LEFT", 860, "남부순환로"], ["OTHER", 2160, "도착"]] },
+    { "t": 9000,  "type": "signal", "value": "OFF" },
+    { "t": 12000, "type": "tbt", "turns": [["LEFT", 140, "남부순환로"], ["OTHER", 1440, "도착"]] },
+    { "t": 14000, "type": "signal", "value": "LEFT" },
+    { "t": 16000, "type": "tbt", "turns": [["OTHER", 1200, "도착"]] },
+    { "t": 17000, "type": "signal", "value": "OFF" },
+    { "t": 19000, "type": "tbt", "turns": [["OTHER", 60, "도착"]] },
+    { "t": 20000, "type": "arrived" },
+    { "t": 22000, "type": "gear", "value": "PARK" }
+  ]
+}

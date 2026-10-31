@@ -1,0 +1,220 @@
+23:16:38.399 [App] process start sdk=34 model=Car on arm64 emulator
+23:16:38.439 [Vehicle] initialized
+23:16:39.272 [TTS] platform engine unavailable status=-1
+23:16:39.277 [Navi] connected
+23:16:39.350 [Navi] onTBTInfo TURN_LEFT/4.0/이름 없는 도로, TURN_WAY/7.0/경유, TURN_RIGHT/10.0/창업로40번길, TURN_ARRIVE/60.0/도착
+23:16:39.373 [Navi] onRouteStateInfo RouteStateInfo(termsAgreement=true, naviMode=ROUTE_GUIDING, isRouting=false, routeOption=RECOMMENDED, remainDestinationChargingInt=77384, remainWaypointChargingInt=[77398, 0], trafficStatus=TrafficStatus(summary=TrafficCongestionSummary(totalCongestionDist=0.0, totalCongestionTime=60, totalCongestionAvrSpeed=0.0), congestionItemList=[], trafficEventList=[]))
+23:16:39.412 [Event] TbtUpdated atMs=1793456199357, turns=[Turn(direction=LEFT, distanceM=4.0, description=이름 없는 도로), Turn(direction=OTHER, distanceM=7.0, description=경유), Turn(direction=RIGHT, distanceM=10.0, description=창업로40번길), Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:16:39.414 [TurnSignal] capability CapabilityConfig(accessType=READ)
+23:16:39.434 [TurnSignal] updated OFF
+23:16:39.441 [Gear] selected GEAR_PARK
+23:16:39.442 [Gear] current GEAR_PARK
+23:16:39.442 [TurnSignal] updated OFF
+23:16:39.443 [Gear] selected GEAR_PARK
+23:16:39.443 [TurnSignal] current OFF
+23:16:39.444 [SeatBelt] driver buckled false
+23:16:39.580 [Event] TurnSignalChanged atMs=1793456199441, state=OFF)
+23:16:39.589 [Event] GearChanged atMs=1793456199442, gear=PARK)
+23:16:39.595 [Event] GearChanged atMs=1793456199443, gear=PARK)
+23:16:39.597 [Event] TurnSignalChanged atMs=1793456199443, state=OFF)
+23:16:39.599 [Event] GearChanged atMs=1793456199443, gear=PARK)
+23:16:39.603 [Event] TurnSignalChanged atMs=1793456199444, state=OFF)
+23:18:04.658 [Scenario] play 장면 1 · 첫 번째 연습 (집–회사, 목표: 회전 전 깜빡이)
+23:18:04.741 [Event] RouteStarted atMs=1793456284706, routeId=home-office)
+23:18:04.959 [Event] TurnSignalChanged atMs=1793456284959, state=OFF)
+23:18:05.659 [Event] TbtUpdated atMs=1793456285658, turns=[Turn(direction=RIGHT, distanceM=420.0, description=창업로40번길), Turn(direction=LEFT, distanceM=1300.0, description=남부순환로), Turn(direction=OTHER, distanceM=2600.0, description=도착)])
+23:18:07.659 [Event] TbtUpdated atMs=1793456287659, turns=[Turn(direction=RIGHT, distanceM=280.0, description=창업로40번길), Turn(direction=LEFT, distanceM=1160.0, description=남부순환로), Turn(direction=OTHER, distanceM=2460.0, description=도착)])
+23:18:09.659 [Event] TbtUpdated atMs=1793456289659, turns=[Turn(direction=RIGHT, distanceM=140.0, description=창업로40번길), Turn(direction=LEFT, distanceM=1020.0, description=남부순환로), Turn(direction=OTHER, distanceM=2320.0, description=도착)])
+23:18:09.661 [Coach] say L2 다음 우회전, 깜빡이 준비예요.
+23:18:09.667 [Coach] open 1:RIGHT level=2 announced=true
+23:18:12.159 [Event] TurnSignalChanged atMs=1793456292159, state=RIGHT)
+23:18:13.659 [Event] TbtUpdated atMs=1793456293659, turns=[Turn(direction=RIGHT, distanceM=30.0, description=창업로40번길), Turn(direction=LEFT, distanceM=910.0, description=남부순환로), Turn(direction=OTHER, distanceM=2210.0, description=도착)])
+23:18:15.659 [Event] TbtUpdated atMs=1793456295659, turns=[Turn(direction=LEFT, distanceM=860.0, description=남부순환로), Turn(direction=OTHER, distanceM=2160.0, description=도착)])
+23:18:15.661 [Coach] close 1:RIGHT CONFIRMED → level=2 streak=1
+23:18:16.684 [Event] TurnSignalChanged atMs=1793456296668, state=OFF)
+23:18:19.667 [Event] TbtUpdated atMs=1793456299666, turns=[Turn(direction=LEFT, distanceM=140.0, description=남부순환로), Turn(direction=OTHER, distanceM=1440.0, description=도착)])
+23:18:19.669 [Coach] say L2 다음 좌회전, 깜빡이 준비예요.
+23:18:19.671 [Coach] open 2:LEFT level=2 announced=true
+23:18:23.660 [Event] TbtUpdated atMs=1793456303660, turns=[Turn(direction=LEFT, distanceM=20.0, description=남부순환로), Turn(direction=OTHER, distanceM=1320.0, description=도착)])
+23:18:25.661 [Event] TbtUpdated atMs=1793456305660, turns=[Turn(direction=OTHER, distanceM=1200.0, description=도착)])
+23:18:25.663 [Coach] close 2:LEFT UNCONFIRMED → level=2 streak=0
+23:18:28.661 [Event] TbtUpdated atMs=1793456308660, turns=[Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:18:29.661 [Event] DestinationArrived atMs=1793456309660)
+23:18:31.661 [Event] GearChanged atMs=1793456311661, gear=PARK)
+23:18:31.663 [Coach] summary 깜빡이 확인 1 / 평가 2 (제외 0) · 다음 연습: 2번째 좌회전(남부순환로) 깜빡이
+23:18:35.868 [Scenario] play 장면 2 · 같은 경로 재연습 (1번 구간은 사용 확인 2회 기록을 미리 넣어 둠 → 짧은 예고)
+23:18:35.878 [Event] RouteStarted atMs=1793456315872, routeId=home-office)
+23:18:36.168 [Event] TurnSignalChanged atMs=1793456316168, state=OFF)
+23:18:36.885 [Event] TbtUpdated atMs=1793456316869, turns=[Turn(direction=RIGHT, distanceM=420.0, description=창업로40번길), Turn(direction=LEFT, distanceM=1300.0, description=남부순환로), Turn(direction=OTHER, distanceM=2600.0, description=도착)])
+23:18:39.869 [Event] TbtUpdated atMs=1793456319868, turns=[Turn(direction=RIGHT, distanceM=140.0, description=창업로40번길), Turn(direction=LEFT, distanceM=1020.0, description=남부순환로), Turn(direction=OTHER, distanceM=2320.0, description=도착)])
+23:18:39.870 [Coach] say L1 우회전
+23:18:39.871 [Coach] open 1:RIGHT level=1 announced=true
+23:18:41.869 [Event] TurnSignalChanged atMs=1793456321869, state=RIGHT)
+23:18:43.870 [Event] TbtUpdated atMs=1793456323869, turns=[Turn(direction=LEFT, distanceM=860.0, description=남부순환로), Turn(direction=OTHER, distanceM=2160.0, description=도착)])
+23:18:43.871 [Coach] close 1:RIGHT CONFIRMED → level=1 streak=1
+23:18:44.890 [Event] TurnSignalChanged atMs=1793456324873, state=OFF)
+23:18:47.869 [Event] TbtUpdated atMs=1793456327868, turns=[Turn(direction=LEFT, distanceM=140.0, description=남부순환로), Turn(direction=OTHER, distanceM=1440.0, description=도착)])
+23:18:47.871 [Coach] say L2 다음 좌회전, 깜빡이 준비예요.
+23:18:47.872 [Coach] open 2:LEFT level=2 announced=true
+23:18:49.870 [Event] TurnSignalChanged atMs=1793456329869, state=LEFT)
+23:18:51.871 [Event] TbtUpdated atMs=1793456331870, turns=[Turn(direction=OTHER, distanceM=1200.0, description=도착)])
+23:18:51.874 [Coach] close 2:LEFT CONFIRMED → level=2 streak=1
+23:18:52.885 [Event] TurnSignalChanged atMs=1793456332868, state=OFF)
+23:18:54.870 [Event] TbtUpdated atMs=1793456334869, turns=[Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:18:55.868 [Event] DestinationArrived atMs=1793456335868)
+23:18:57.869 [Event] GearChanged atMs=1793456337869, gear=PARK)
+23:18:57.871 [Coach] summary 깜빡이 확인 2 / 평가 2 (제외 0) · 다음 연습: 같은 경로를 한 번 더
+23:19:02.490 [Navi] onTBTInfo TURN_LEFT/4.0/이름 없는 도로, TURN_WAY/7.0/경유, TURN_RIGHT/10.0/창업로40번길, TURN_ARRIVE/60.0/도착
+23:19:02.496 [Event] TbtUpdated atMs=1793456342492, turns=[Turn(direction=LEFT, distanceM=4.0, description=이름 없는 도로), Turn(direction=OTHER, distanceM=7.0, description=경유), Turn(direction=RIGHT, distanceM=10.0, description=창업로40번길), Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:19:02.497 [Coach] open 4:LEFT level=2 announced=false
+23:19:03.485 [Navi] onTBTInfo TURN_LEFT/4.0/이름 없는 도로, TURN_WAY/7.0/경유, TURN_RIGHT/10.0/창업로40번길, TURN_ARRIVE/60.0/도착
+23:19:03.488 [Event] TbtUpdated atMs=1793456343486, turns=[Turn(direction=LEFT, distanceM=4.0, description=이름 없는 도로), Turn(direction=OTHER, distanceM=7.0, description=경유), Turn(direction=RIGHT, distanceM=10.0, description=창업로40번길), Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:19:30.664 [App] process start sdk=34 model=Car on arm64 emulator
+23:19:30.697 [Vehicle] initialized
+23:19:31.392 [TTS] platform engine unavailable status=-1
+23:19:31.411 [Navi] connected
+23:19:31.467 [Navi] onRouteStateInfo RouteStateInfo(termsAgreement=true, naviMode=ROUTE_GUIDING, isRouting=false, routeOption=RECOMMENDED, remainDestinationChargingInt=77384, remainWaypointChargingInt=[77398, 0], trafficStatus=TrafficStatus(summary=TrafficCongestionSummary(totalCongestionDist=0.0, totalCongestionTime=60, totalCongestionAvrSpeed=0.0), congestionItemList=[], trafficEventList=[]))
+23:19:31.519 [Navi] onTBTInfo TURN_LEFT/4.0/이름 없는 도로, TURN_WAY/7.0/경유, TURN_RIGHT/10.0/창업로40번길, TURN_ARRIVE/60.0/도착
+23:19:31.647 [TurnSignal] capability CapabilityConfig(accessType=READ)
+23:19:31.651 [TurnSignal] updated OFF
+23:19:31.659 [Gear] selected GEAR_PARK
+23:19:31.660 [TurnSignal] updated OFF
+23:19:31.661 [Gear] selected GEAR_PARK
+23:19:31.676 [Gear] current GEAR_PARK
+23:19:31.677 [TurnSignal] current OFF
+23:19:31.676 [SeatBelt] driver buckled false
+23:19:31.794 [Event] TbtUpdated atMs=1793456371519, turns=[Turn(direction=LEFT, distanceM=4.0, description=이름 없는 도로), Turn(direction=OTHER, distanceM=7.0, description=경유), Turn(direction=RIGHT, distanceM=10.0, description=창업로40번길), Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:19:31.803 [Event] TurnSignalChanged atMs=1793456371652, state=OFF)
+23:19:31.805 [Event] GearChanged atMs=1793456371660, gear=PARK)
+23:19:31.806 [Event] TurnSignalChanged atMs=1793456371661, state=OFF)
+23:19:31.807 [Event] GearChanged atMs=1793456371661, gear=PARK)
+23:19:31.808 [Event] GearChanged atMs=1793456371677, gear=PARK)
+23:19:31.809 [Event] TurnSignalChanged atMs=1793456371677, state=OFF)
+23:19:41.260 [Scenario] play 장면 3 · 재탐색과 신호 누락 → 감점 없이 평가 제외
+23:19:41.294 [Event] RouteStarted atMs=1793456381282, routeId=home-office)
+23:19:41.560 [Event] TurnSignalChanged atMs=1793456381560, state=OFF)
+23:19:42.285 [Event] TbtUpdated atMs=1793456382268, turns=[Turn(direction=RIGHT, distanceM=420.0, description=창업로40번길), Turn(direction=LEFT, distanceM=1300.0, description=남부순환로), Turn(direction=OTHER, distanceM=2600.0, description=도착)])
+23:19:45.263 [Event] TbtUpdated atMs=1793456385262, turns=[Turn(direction=RIGHT, distanceM=140.0, description=창업로40번길), Turn(direction=LEFT, distanceM=1020.0, description=남부순환로), Turn(direction=OTHER, distanceM=2320.0, description=도착)])
+23:19:45.264 [Coach] say L1 우회전
+23:19:45.266 [Coach] open 1:RIGHT level=1 announced=true
+23:19:48.264 [Event] RerouteEnded atMs=1793456388262)
+23:19:48.267 [Coach] close 1:RIGHT EXCLUDED → level=1 streak=1
+23:19:49.285 [Event] TbtUpdated atMs=1793456389268, turns=[Turn(direction=LEFT, distanceM=600.0, description=대왕판교로), Turn(direction=OTHER, distanceM=1900.0, description=도착)])
+23:19:52.262 [Event] TbtUpdated atMs=1793456392261, turns=[Turn(direction=LEFT, distanceM=130.0, description=대왕판교로), Turn(direction=OTHER, distanceM=1430.0, description=도착)])
+23:19:52.263 [Coach] say L2 다음 좌회전, 깜빡이 준비예요.
+23:19:52.264 [Coach] open 1:LEFT level=2 announced=true
+23:19:53.762 [Event] SignalError atMs=1793456393761, reason=turn signal subscription lost)
+23:19:56.263 [Event] TbtUpdated atMs=1793456396261, turns=[Turn(direction=OTHER, distanceM=1200.0, description=도착)])
+23:19:56.267 [Coach] close 1:LEFT EXCLUDED → level=2 streak=0
+23:19:57.285 [Event] TurnSignalChanged atMs=1793456397268, state=OFF)
+23:19:59.262 [Event] TbtUpdated atMs=1793456399261, turns=[Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:20:00.261 [Event] DestinationArrived atMs=1793456400260)
+23:20:02.261 [Event] GearChanged atMs=1793456402260, gear=PARK)
+23:20:02.262 [Coach] summary 깜빡이 확인 0 / 평가 0 (제외 2) · 다음 연습: 같은 경로를 한 번 더
+23:20:11.290 [Scenario] play 장면 4 · 도착해도 기어 P 전환 전에는 복기를 열지 않는다
+23:20:11.309 [Event] RouteStarted atMs=1793456411303, routeId=home-office)
+23:20:11.590 [Event] TurnSignalChanged atMs=1793456411590, state=OFF)
+23:20:12.319 [Event] TbtUpdated atMs=1793456412301, turns=[Turn(direction=RIGHT, distanceM=140.0, description=창업로40번길), Turn(direction=OTHER, distanceM=900.0, description=도착)])
+23:20:12.320 [Coach] say L1 우회전
+23:20:12.321 [Coach] open 1:RIGHT level=1 announced=true
+23:20:14.291 [Event] TurnSignalChanged atMs=1793456414291, state=RIGHT)
+23:20:16.291 [Event] TbtUpdated atMs=1793456416291, turns=[Turn(direction=OTHER, distanceM=700.0, description=도착)])
+23:20:16.294 [Coach] close 1:RIGHT EXCLUDED → level=1 streak=1
+23:20:17.318 [Event] TurnSignalChanged atMs=1793456417301, state=OFF)
+23:20:19.291 [Event] TbtUpdated atMs=1793456419290, turns=[Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:20:20.290 [Event] DestinationArrived atMs=1793456420290)
+23:20:22.291 [Event] GearChanged atMs=1793456422290, gear=DRIVE)
+23:20:26.294 [Event] GearChanged atMs=1793456426294, gear=PARK)
+23:20:26.296 [Coach] summary 깜빡이 확인 0 / 평가 0 (제외 1) · 다음 연습: 같은 경로를 한 번 더
+23:20:35.144 [Scenario] play 장면 5 · 가상 TBT + 실제 방향지시등 (Virtual Console로 깜빡이를 켜야 확인됨)
+23:20:35.193 [Event] RouteStarted atMs=1793456435168, routeId=home-office)
+23:20:36.145 [Event] TbtUpdated atMs=1793456436144, turns=[Turn(direction=RIGHT, distanceM=420.0, description=창업로40번길), Turn(direction=OTHER, distanceM=1200.0, description=도착)])
+23:20:39.147 [Event] TbtUpdated atMs=1793456439147, turns=[Turn(direction=RIGHT, distanceM=140.0, description=창업로40번길), Turn(direction=OTHER, distanceM=920.0, description=도착)])
+23:20:39.148 [Coach] say L1 우회전
+23:20:39.149 [Coach] open 1:RIGHT level=1 announced=true
+23:20:43.697 [TurnSignal] updated RIGHT
+23:20:43.707 [Event] TurnSignalChanged atMs=1793456443699, state=RIGHT)
+23:20:49.114 [TurnSignal] updated OFF
+23:20:49.126 [Event] TurnSignalChanged atMs=1793456449122, state=OFF)
+23:20:51.147 [Event] TbtUpdated atMs=1793456451146, turns=[Turn(direction=OTHER, distanceM=700.0, description=도착)])
+23:20:51.149 [Coach] close 1:RIGHT EXCLUDED → level=1 streak=1
+23:20:54.146 [Event] TbtUpdated atMs=1793456454146, turns=[Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:20:55.145 [Event] DestinationArrived atMs=1793456455145)
+23:21:03.270 [Gear] selected GEAR_DRIVE
+23:21:03.294 [Event] GearChanged atMs=1793456463280, gear=DRIVE)
+23:21:08.049 [Gear] selected GEAR_PARK
+23:21:08.055 [Event] GearChanged atMs=1793456468051, gear=PARK)
+23:21:08.056 [Coach] summary 깜빡이 확인 0 / 평가 0 (제외 1) · 다음 연습: 같은 경로를 한 번 더
+23:21:55.693 [App] process start sdk=34 model=Car on arm64 emulator
+23:21:55.717 [Vehicle] initialized
+23:21:56.359 [TTS] platform engine unavailable status=-1
+23:21:56.365 [Navi] connected
+23:21:56.432 [Navi] onTBTInfo TURN_LEFT/4.0/이름 없는 도로, TURN_WAY/7.0/경유, TURN_RIGHT/10.0/창업로40번길, TURN_ARRIVE/60.0/도착
+23:21:56.458 [Navi] onRouteStateInfo RouteStateInfo(termsAgreement=true, naviMode=ROUTE_GUIDING, isRouting=false, routeOption=RECOMMENDED, remainDestinationChargingInt=77384, remainWaypointChargingInt=[77398, 0], trafficStatus=TrafficStatus(summary=TrafficCongestionSummary(totalCongestionDist=0.0, totalCongestionTime=60, totalCongestionAvrSpeed=0.0), congestionItemList=[], trafficEventList=[]))
+23:21:56.492 [Event] TbtUpdated atMs=1793456516443, turns=[Turn(direction=LEFT, distanceM=4.0, description=이름 없는 도로), Turn(direction=OTHER, distanceM=7.0, description=경유), Turn(direction=RIGHT, distanceM=10.0, description=창업로40번길), Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:21:56.531 [TurnSignal] current OFF
+23:21:56.541 [TurnSignal] updated OFF
+23:21:56.543 [Gear] current GEAR_PARK
+23:21:56.541 [TurnSignal] capability CapabilityConfig(accessType=READ)
+23:21:56.546 [Gear] selected GEAR_PARK
+23:21:56.547 [SeatBelt] driver buckled false
+23:21:56.546 [Gear] selected GEAR_PARK
+23:21:56.616 [Event] TurnSignalChanged atMs=1793456516532, state=OFF)
+23:21:56.617 [Event] TurnSignalChanged atMs=1793456516543, state=OFF)
+23:21:56.618 [Event] GearChanged atMs=1793456516544, gear=PARK)
+23:21:56.620 [Event] GearChanged atMs=1793456516546, gear=PARK)
+23:21:56.622 [Event] GearChanged atMs=1793456516548, gear=PARK)
+23:22:06.293 [Scenario] play 장면 3 · 재탐색과 신호 누락 → 감점 없이 평가 제외
+23:22:06.350 [Event] RouteStarted atMs=1793456526333, routeId=home-office)
+23:22:06.593 [Event] TurnSignalChanged atMs=1793456526593, state=OFF)
+23:22:07.294 [Event] TbtUpdated atMs=1793456527293, turns=[Turn(direction=RIGHT, distanceM=420.0, description=창업로40번길), Turn(direction=LEFT, distanceM=1300.0, description=남부순환로), Turn(direction=OTHER, distanceM=2600.0, description=도착)])
+23:22:10.295 [Event] TbtUpdated atMs=1793456530294, turns=[Turn(direction=RIGHT, distanceM=140.0, description=창업로40번길), Turn(direction=LEFT, distanceM=1020.0, description=남부순환로), Turn(direction=OTHER, distanceM=2320.0, description=도착)])
+23:22:10.297 [Coach] say L1 우회전
+23:22:10.299 [Coach] open 1:RIGHT level=1 announced=true
+23:22:13.295 [Event] RerouteEnded atMs=1793456533294)
+23:22:13.298 [Coach] close 1:RIGHT EXCLUDED → level=1 streak=1
+23:22:14.319 [Event] TbtUpdated atMs=1793456534301, turns=[Turn(direction=LEFT, distanceM=600.0, description=대왕판교로), Turn(direction=OTHER, distanceM=1900.0, description=도착)])
+23:22:17.295 [Event] TbtUpdated atMs=1793456537294, turns=[Turn(direction=LEFT, distanceM=130.0, description=대왕판교로), Turn(direction=OTHER, distanceM=1430.0, description=도착)])
+23:22:17.297 [Coach] say L2 다음 좌회전, 깜빡이 준비예요.
+23:22:17.300 [Coach] open 1:LEFT level=2 announced=true
+23:22:18.809 [Event] SignalError atMs=1793456538796, reason=turn signal subscription lost)
+23:22:21.296 [Event] TbtUpdated atMs=1793456541295, turns=[Turn(direction=OTHER, distanceM=1200.0, description=도착)])
+23:22:21.300 [Coach] close 1:LEFT EXCLUDED → level=2 streak=0
+23:22:22.319 [Event] TurnSignalChanged atMs=1793456542305, state=OFF)
+23:22:24.295 [Event] TbtUpdated atMs=1793456544295, turns=[Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:22:25.296 [Event] DestinationArrived atMs=1793456545292)
+23:22:27.295 [Event] GearChanged atMs=1793456547295, gear=PARK)
+23:22:27.297 [Coach] summary 깜빡이 확인 0 / 평가 0 (제외 2) · 다음 연습: 같은 경로를 한 번 더
+23:22:36.230 [Scenario] play 장면 4 · 도착해도 기어 P 전환 전에는 복기를 열지 않는다
+23:22:36.247 [Event] RouteStarted atMs=1793456556242, routeId=home-office)
+23:22:36.529 [Event] TurnSignalChanged atMs=1793456556529, state=OFF)
+23:22:37.255 [Event] TbtUpdated atMs=1793456557239, turns=[Turn(direction=RIGHT, distanceM=140.0, description=창업로40번길), Turn(direction=OTHER, distanceM=900.0, description=도착)])
+23:22:37.256 [Coach] say L1 우회전
+23:22:37.257 [Coach] open 1:RIGHT level=1 announced=true
+23:22:39.232 [Event] TurnSignalChanged atMs=1793456559231, state=RIGHT)
+23:22:41.232 [Event] TbtUpdated atMs=1793456561231, turns=[Turn(direction=OTHER, distanceM=700.0, description=도착)])
+23:22:41.234 [Coach] close 1:RIGHT CONFIRMED → level=0 streak=0
+23:22:42.259 [Event] TurnSignalChanged atMs=1793456562243, state=OFF)
+23:22:44.231 [Event] TbtUpdated atMs=1793456564230, turns=[Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:22:45.231 [Event] DestinationArrived atMs=1793456565230)
+23:22:47.231 [Event] GearChanged atMs=1793456567231, gear=DRIVE)
+23:22:51.232 [Event] GearChanged atMs=1793456571231, gear=PARK)
+23:22:51.236 [Coach] summary 깜빡이 확인 1 / 평가 1 (제외 0) · 다음 연습: 같은 경로를 한 번 더
+23:23:01.375 [Scenario] play 장면 5 · 가상 TBT + 실제 방향지시등 (Virtual Console로 깜빡이를 켜야 확인됨)
+23:23:01.413 [Event] RouteStarted atMs=1793456581404, routeId=home-office)
+23:23:02.376 [Event] TbtUpdated atMs=1793456582375, turns=[Turn(direction=RIGHT, distanceM=420.0, description=창업로40번길), Turn(direction=OTHER, distanceM=1200.0, description=도착)])
+23:23:05.377 [Event] TbtUpdated atMs=1793456585376, turns=[Turn(direction=RIGHT, distanceM=140.0, description=창업로40번길), Turn(direction=OTHER, distanceM=920.0, description=도착)])
+23:23:05.379 [Coach] open 1:RIGHT level=0 announced=false
+23:23:10.010 [TurnSignal] updated RIGHT
+23:23:10.054 [Event] TurnSignalChanged atMs=1793456590022, state=RIGHT)
+23:23:15.841 [TurnSignal] updated OFF
+23:23:16.186 [Event] TurnSignalChanged atMs=1793456595900, state=OFF)
+23:23:17.396 [Event] TbtUpdated atMs=1793456597375, turns=[Turn(direction=OTHER, distanceM=700.0, description=도착)])
+23:23:17.399 [Coach] close 1:RIGHT CONFIRMED → level=0 streak=1
+23:23:20.378 [Event] TbtUpdated atMs=1793456600377, turns=[Turn(direction=OTHER, distanceM=60.0, description=도착)])
+23:23:21.376 [Event] DestinationArrived atMs=1793456601376)
+23:23:29.907 [Gear] selected GEAR_DRIVE
+23:23:29.929 [Event] GearChanged atMs=1793456609924, gear=DRIVE)
+23:23:35.221 [Gear] selected GEAR_PARK
+23:23:35.231 [Event] GearChanged atMs=1793456615225, gear=PARK)
+23:23:35.232 [Coach] summary 깜빡이 확인 1 / 평가 1 (제외 0) · 다음 연습: 같은 경로를 한 번 더

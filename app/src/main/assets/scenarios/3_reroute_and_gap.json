@@ -1,0 +1,19 @@
+{
+  "name": "장면 3 · 재탐색과 신호 누락 → 감점 없이 평가 제외",
+  "routeId": "home-office",
+  "events": [
+    { "t": 0,     "type": "routeStarted" },
+    { "t": 300,   "type": "signal", "value": "OFF" },
+    { "t": 1000,  "type": "tbt", "turns": [["RIGHT", 420, "창업로40번길"], ["LEFT", 1300, "남부순환로"], ["OTHER", 2600, "도착"]] },
+    { "t": 4000,  "type": "tbt", "turns": [["RIGHT", 140, "창업로40번길"], ["LEFT", 1020, "남부순환로"], ["OTHER", 2320, "도착"]] },
+    { "t": 7000,  "type": "reroute" },
+    { "t": 8000,  "type": "tbt", "turns": [["LEFT", 600, "대왕판교로"], ["OTHER", 1900, "도착"]] },
+    { "t": 11000, "type": "tbt", "turns": [["LEFT", 130, "대왕판교로"], ["OTHER", 1430, "도착"]] },
+    { "t": 12500, "type": "error", "reason": "turn signal subscription lost" },
+    { "t": 15000, "type": "tbt", "turns": [["OTHER", 1200, "도착"]] },
+    { "t": 16000, "type": "signal", "value": "OFF" },
+    { "t": 18000, "type": "tbt", "turns": [["OTHER", 60, "도착"]] },
+    { "t": 19000, "type": "arrived" },
+    { "t": 21000, "type": "gear", "value": "PARK" }
+  ]
+}

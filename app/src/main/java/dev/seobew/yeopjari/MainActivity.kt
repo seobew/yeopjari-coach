@@ -1,49 +1,58 @@
 package dev.seobew.yeopjari
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.Button
+import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import dev.seobew.yeopjari.probe.NaviProbe
-import dev.seobew.yeopjari.probe.ProbeLog
-import dev.seobew.yeopjari.probe.VehicleProbe
 
 /**
- * P0 연동 검증 화면. 기능 구현 전에 SDK 이벤트가 실제로 오는지 로그만 찍는다.
- * 로그 파일: adb shell run-as dev.seobew.yeopjari cat files/probe.log
+ * P0·P1 검증 화면. SDK 연결은 ProbeApp이 들고 있고, 여기서는 발화·복기·로그를 보여주고 버튼만 둔다.
+ * 출시 화면(주행 중 한 줄 + 일시정지)은 아직 아니다.
  */
 class MainActivity : AppCompatActivity() {
-    private lateinit var log: ProbeLog
-    private lateinit var vehicle: VehicleProbe
-    private lateinit var navi: NaviProbe
+    private val app get() = application as ProbeApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val lines = TextView(this).apply { textSize = 14f; setPadding(24, 24, 24, 24) }
+        val say = TextView(this).apply { textSize = 26f; setTypeface(null, Typeface.BOLD); setPadding(24, 16, 24, 4) }
+        val summary = TextView(this).apply { textSize = 16f; setPadding(24, 0, 24, 12) }
+        val lines = TextView(this).apply { textSize = 13f; setPadding(24, 8, 24, 24) }
         val scroll = ScrollView(this).apply { addView(lines) }
-        log = ProbeLog(this) { line ->
+
+        app.log.onLine = { line ->
             lines.append(line + "\n")
             scroll.post { scroll.fullScroll(ScrollView.FOCUS_DOWN) }
+        }
+        app.onCoachChanged = {
+            say.text = app.lastSay
+            summary.text = app.lastSummary
         }
 
         val buttons = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
-            addView(button("경로 요청") { navi.requestSampleRoute() })
-            addView(button("재탐색") { navi.requestReRoute() })
-            addView(button("경로 취소") { navi.cancelRoute() })
+            addView(button("경로 요청") { app.navi.requestSampleRoute() })
+            addView(button("재탐색") { app.navi.requestReRoute() })
+            addView(button("경로 취소") { app.navi.cancelRoute() })
+            app.scenarios.list().forEach { file ->
+                addView(button("▶ " + file.removeSuffix(".json")) {
+                    val name = app.scenarios.play(file, app.store)
+                    app.log.log("Scenario", "play", name)
+                })
+            }
+            addView(button("기록 초기화") { app.store.clear(); app.log.log("Store", "cleared") })
         }
         setContentView(LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            addView(buttons)
+            addView(HorizontalScrollView(this@MainActivity).apply { addView(buttons) })
+            addView(say)
+            addView(summary)
             addView(scroll)
         })
-
-        log.log("App", "start", "sdk=${android.os.Build.VERSION.SDK_INT} model=${android.os.Build.MODEL}")
-        vehicle = VehicleProbe(this, log).also { it.start() }
-        navi = NaviProbe(this, log).also { it.start() }
     }
 
     private fun button(label: String, onClick: () -> Unit) = Button(this).apply {
@@ -52,8 +61,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        navi.stop()
-        vehicle.stop()
+        app.log.onLine = null
+        app.onCoachChanged = null
         super.onDestroy()
     }
 }

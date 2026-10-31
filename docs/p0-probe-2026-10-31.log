@@ -1,0 +1,36 @@
+04:51:48.095 [App] process start sdk=34 model=Car on arm64 emulator
+04:51:48.126 [Vehicle] initialized
+04:51:48.958 [Navi] connected
+04:51:49.014 [Navi] onRouteStateInfo RouteStateInfo(termsAgreement=true, naviMode=ROUTE_GUIDING, isRouting=false, routeOption=RECOMMENDED, remainDestinationChargingInt=77385, remainWaypointChargingInt=[77398, 0], trafficStatus=TrafficStatus(summary=TrafficCongestionSummary(totalCongestionDist=0.0, totalCongestionTime=60, totalCongestionAvrSpeed=0.0), congestionItemList=[], trafficEventList=[]))
+04:51:49.045 [Navi] onTBTInfo TURN_LEFT/4.0/이름 없는 도로, TURN_WAY/7.0/경유, TURN_RIGHT/10.0/창업로40번길, TURN_ARRIVE/60.0/도착
+04:51:49.071 [TurnSignal] capability CapabilityConfig(accessType=READ)
+04:51:49.113 [TurnSignal] updated OFF
+04:51:49.116 [Gear] current GEAR_PARK
+04:51:49.115 [TurnSignal] current OFF
+04:51:49.119 [Gear] selected GEAR_PARK
+04:51:49.132 [Gear] selected GEAR_PARK
+04:51:49.148 [SeatBelt] driver buckled false
+04:51:57.164 [Gear] selected GEAR_DRIVE
+04:52:00.892 [TurnSignal] updated RIGHT
+04:52:03.091 [TurnSignal] updated OFF
+04:52:08.306 [TurnSignal] updated LEFT
+04:52:10.619 [TurnSignal] updated OFF
+04:52:15.760 [Gear] selected GEAR_PARK
+04:52:17.912 [Navi] requestRouteWithWaypoints
+04:52:18.464 [Navi] onRouteCancelled
+04:52:18.470 [Navi] onNavigationStatus FREE_DRIVE
+04:52:18.499 [Navi] onRouteStateInfo RouteStateInfo(termsAgreement=true, naviMode=SAFE_GUIDING, isRouting=false, routeOption=RECOMMENDED, remainDestinationChargingInt=0, remainWaypointChargingInt=[0, 0], trafficStatus=TrafficStatus(summary=TrafficCongestionSummary(totalCongestionDist=0.0, totalCongestionTime=60, totalCongestionAvrSpeed=0.0), congestionItemList=[], trafficEventList=[]))
+04:52:19.405 [Navi] onTBTInfo 
+04:52:23.880 [Navi] onRouteStarted RouteStartInfo(duration=60, distance=10, tollFare=0, name=소프트웨어드림센터, remainDestinationChargingValue=77398)
+04:52:23.884 [Navi] onRouteEnded
+04:52:23.887 [Navi] onNavigationStatus ROUTE_DRIVE
+04:52:23.895 [Navi] onRouteStateInfo RouteStateInfo(termsAgreement=true, naviMode=ROUTE_GUIDING, isRouting=false, routeOption=RECOMMENDED, remainDestinationChargingInt=77385, remainWaypointChargingInt=[77398, 0], trafficStatus=TrafficStatus(summary=TrafficCongestionSummary(totalCongestionDist=0.0, totalCongestionTime=60, totalCongestionAvrSpeed=0.0), congestionItemList=[], trafficEventList=[]))
+04:52:24.417 [Navi] onTBTInfo TURN_LEFT/4.0/이름 없는 도로, TURN_WAY/7.0/경유, TURN_RIGHT/10.0/창업로40번길, TURN_ARRIVE/60.0/도착
+04:53:05.806 [Navi] requestReRoute
+04:53:17.938 [Navi] cancelRoute
+04:53:18.213 [Navi] onTBTInfo 
+04:53:18.215 [Navi] onRouteCancelled
+04:53:18.216 [Navi] onNavigationStatus FREE_DRIVE
+04:53:18.217 [Navi] onTBTInfo 
+04:53:18.253 [Navi] onRouteStateInfo RouteStateInfo(termsAgreement=true, naviMode=SAFE_GUIDING, isRouting=false, routeOption=RECOMMENDED, remainDestinationChargingInt=0, remainWaypointChargingInt=[0, 0], trafficStatus=TrafficStatus(summary=TrafficCongestionSummary(totalCongestionDist=0.0, totalCongestionTime=60, totalCongestionAvrSpeed=0.0), congestionItemList=[], trafficEventList=[]))
+04:53:18.469 [Navi] onTBTInfo 

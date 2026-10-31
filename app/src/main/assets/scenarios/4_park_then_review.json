@@ -1,0 +1,16 @@
+{
+  "name": "장면 4 · 도착해도 기어 P 전환 전에는 복기를 열지 않는다",
+  "routeId": "home-office",
+  "events": [
+    { "t": 0,     "type": "routeStarted" },
+    { "t": 300,   "type": "signal", "value": "OFF" },
+    { "t": 1000,  "type": "tbt", "turns": [["RIGHT", 140, "창업로40번길"], ["OTHER", 900, "도착"]] },
+    { "t": 3000,  "type": "signal", "value": "RIGHT" },
+    { "t": 5000,  "type": "tbt", "turns": [["OTHER", 700, "도착"]] },
+    { "t": 6000,  "type": "signal", "value": "OFF" },
+    { "t": 8000,  "type": "tbt", "turns": [["OTHER", 60, "도착"]] },
+    { "t": 9000,  "type": "arrived" },
+    { "t": 11000, "type": "gear", "value": "DRIVE" },
+    { "t": 15000, "type": "gear", "value": "PARK" }
+  ]
+}

@@ -11,12 +11,14 @@
     <uses-permission android:name="pleos.car.permission.NAVI_ROUTE_SEARCH" />
 
     <application
+        android:name=".ProbeApp"
         android:allowBackup="false"
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
 
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

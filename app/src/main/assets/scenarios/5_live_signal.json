@@ -1,0 +1,12 @@
+{
+  "name": "장면 5 · 가상 TBT + 실제 방향지시등 (Virtual Console로 깜빡이를 켜야 확인됨)",
+  "routeId": "home-office",
+  "events": [
+    { "t": 0,     "type": "routeStarted" },
+    { "t": 1000,  "type": "tbt", "turns": [["RIGHT", 420, "창업로40번길"], ["OTHER", 1200, "도착"]] },
+    { "t": 4000,  "type": "tbt", "turns": [["RIGHT", 140, "창업로40번길"], ["OTHER", 920, "도착"]] },
+    { "t": 16000, "type": "tbt", "turns": [["OTHER", 700, "도착"]] },
+    { "t": 19000, "type": "tbt", "turns": [["OTHER", 60, "도착"]] },
+    { "t": 20000, "type": "arrived" }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "장면 1 · 첫 번째 연습 (집–회사, 목표: 회전 전 깜빡이)",
+  "routeId": "home-office",
+  "events": [
+    { "t": 0,     "type": "routeStarted" },
+    { "t": 300,   "type": "signal", "value": "OFF" },
+    { "t": 1000,  "type": "tbt", "turns": [["RIGHT", 420, "창업로40번길"], ["LEFT", 1300, "남부순환로"], ["OTHER", 2600, "도착"]] },
+    { "t": 3000,  "type": "tbt", "turns": [["RIGHT", 280, "창업로40번길"], ["LEFT", 1160, "남부순환로"], ["OTHER", 2460, "도착"]] },
+    { "t": 5000,  "type": "tbt", "turns": [["RIGHT", 140, "창업로40번길"], ["LEFT", 1020, "남부순환로"], ["OTHER", 2320, "도착"]] },
+    { "t": 7500,  "type": "signal", "value": "RIGHT" },
+    { "t": 9000,  "type": "tbt", "turns": [["RIGHT", 30, "창업로40번길"], ["LEFT", 910, "남부순환로"], ["OTHER", 2210, "도착"]] },
+    { "t": 11000, "type": "tbt", "turns": [["LEFT", 860, "남부순환로"], ["OTHER", 2160, "도착"]] },
+    { "t": 12000, "type": "signal", "value": "OFF" },
+    { "t": 15000, "type": "tbt", "turns": [["LEFT", 140, "남부순환로"], ["OTHER", 1440, "도착"]] },
+    { "t": 19000, "type": "tbt", "turns": [["LEFT", 20, "남부순환로"], ["OTHER", 1320, "도착"]] },
+    { "t": 21000, "type": "tbt", "turns": [["OTHER", 1200, "도착"]] },
+    { "t": 24000, "type": "tbt", "turns": [["OTHER", 60, "도착"]] },
+    { "t": 25000, "type": "arrived" },
+    { "t": 27000, "type": "gear", "value": "PARK" }
+  ]
+}
