@@ -76,7 +76,15 @@ class PracticeSession(
         emit(CoachEvent.RouteStarted(System.currentTimeMillis(), id))
     }
 
-    fun togglePause() { paused = !paused; if (paused) lastSay = ""; onChange() }
+    fun togglePause() {
+        paused = !paused
+        if (paused) lastSay = ""
+        emit(CoachEvent.PauseChanged(System.currentTimeMillis(), paused))
+        onChange()
+    }
+
+    /** 주차 확인 없이 운전자가 끝냄. 엔진이 Summary를 내면 복기 화면으로 넘어간다. */
+    fun finish() = emit(CoachEvent.PracticeEnded(System.currentTimeMillis()))
 
     fun close() { screen = Screen.Select; lastSay = ""; onChange() }
 

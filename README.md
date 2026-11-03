@@ -4,47 +4,40 @@
 
 **APK:** `apk/yeopjari_옆자리코치_release.apk` (release 빌드, 디버그 키 서명)
 
-현재 단계: **P1** — P0 연동 검증 완료, 평가 규칙·안내 단계 엔진 + 시나리오 재생 구현.
+## 심사용 실행 절차 (Pleos Connect Emulator v2.1.0)
+
+1. 설치: `adb install -r apk/yeopjari_옆자리코치_release.apk` 후 런처에서 "옆자리 코치" 실행.
+2. 선택 화면 하단 **개발자 화면** → **경로 요청**. 기본 내비에 샘플 경로(42dot)가 잡히고, 돌아오면 "내비 목적지: 42dot"이 보인다.
+3. 시작 조건은 **정차(기어 P) + 안전벨트**다. 에뮬레이터는 벨트 신호가 항상 미착용이라 **시작 버튼을 길게 누르면** 조건을 우회한다.
+4. 에뮬레이터는 차량 이동을 만들 수 없어(내비가 NMEA만 쓰고 에뮬 GNSS HAL 체크섬이 틀림) 주행 중 회전 안내(TBT)는 개발자 화면의 **▶ 1~5 시나리오**로 대신한다. 방향지시등·기어는 Virtual Console(또는 `tools/vconsole.sh turn BlinkRight`, `gear Park`)로 실제 신호를 넣는다.
+5. 기어 P를 넣으면(또는 주행 화면의 "연습 종료") 복기 화면이 열린다. 같은 시나리오를 다시 돌리면 확인이 이어진 구간부터 안내가 짧아진다.
+
+| 시나리오 | 보여주는 것 |
+|---|---|
+| ▶ 1_first_practice | 첫 연습. 우회전 확인, 좌회전 미확인 → "확인 1 / 평가 2" |
+| ▶ 2_second_practice | 확인 2회 기록이 있는 구간은 짧은 예고("우회전")만 |
+| ▶ 3_reroute_and_gap | 재탐색·신호 오류 구간은 감점 없이 제외 |
+| ▶ 4_park_then_review | 도착해도 기어 P 전에는 복기를 열지 않음 |
+| ▶ 5_live_signal | 가상 TBT + 실제 방향지시등 신호로 확인 |
+
+모든 이벤트는 `files/probe.log`에 남는다: `adb shell run-as dev.seobew.yeopjari --user 10 cat files/probe.log` (에뮬레이터 유저는 10).
 
 ## 구조
 
-- `domain/` 순수 Kotlin. `CoachEvent`(입력) → `CoachEngine`(판정·안내 단계) → `CoachOutput`. 단위 테스트 `app/src/test`.
-- `probe/` Pleos SDK 어댑터 (Vehicle, NaviHelper) → `CoachEvent`. 모든 이벤트를 `files/probe.log`에 남김.
-- `scenario/` `assets/scenarios/*.json` 재생 — 에뮬레이터는 차량 이동을 못 만들어 주행 중 TBT는 이걸로 대신한다.
+- `domain/` 순수 Kotlin. `CoachEvent`(입력) → `CoachEngine`(평가 구간·관측 충분 조건·안내 단계) → `CoachOutput`. 단위 테스트 `app/src/test` (`./gradlew testDebugUnitTest`).
+- `coach/PracticeSession` 화면 상태 기계(선택 → 주행 중 → 복기). `CoachActivity`가 그린다.
+- `probe/` Pleos SDK 어댑터(Vehicle, NaviHelper) → `CoachEvent`.
+- `scenario/` `assets/scenarios/*.json` 재생(가상 TBT 입력 모드).
 - `store/` 구간별 안내 단계를 `files/practice.json`에 저장.
-- `tools/vconsole.sh` Virtual Console(8088) CLI: `gear Drive|Park`, `turn BlinkLeft|BlinkRight|Off`.
+- `docs/` P0·P1 실측 로그, 시연 영상 계획.
 
-## 테스트 환경
+## 빌드
 
-- Pleos Connect Emulator v2.1.0 (API 34, arm64, Automotive AVD · Cold boot · RAM 4 GB). 에뮬레이터 유저는 10.
-- 기본 내비 앱(`ai.umos.maps.android.navigation.app`)이 목적지를 갖고 있어야 "연습 시작"이 열린다. 개발자 화면의 "경로 요청"으로 샘플 경로를 넣을 수 있다.
-- 에뮬레이터는 차량 이동을 만들 수 없다(내비가 NMEA만 쓰고 에뮬 GNSS HAL 체크섬이 틀림). 주행 중 TBT 갱신은 개발자 화면의 시나리오 재생(▶ 1~5)으로 대신한다. 방향지시등·기어는 `tools/vconsole.sh`로 실제 신호를 넣는다.
-- 안전벨트 신호는 에뮬레이터에서 항상 미착용이다. 선택 화면의 시작 버튼을 길게 누르면 개발자 우회.
-
-## 실행
-
-- Pleos Connect Emulator v2.1.0 (API 34, Automotive AVD, Cold boot, RAM 4 GB)
-- JDK 17, Android Studio 최신
-
-```bash
-./gradlew assembleDebug
-./gradlew installDebug
-./gradlew testDebugUnitTest                               # 엔진 단위 테스트
-adb shell run-as dev.seobew.yeopjari --user 10 cat files/probe.log   # 이벤트 로그 (에뮬레이터 유저는 10)
-```
+JDK 17, AGP 8.8.2. `./gradlew assembleRelease` → `app/build/outputs/apk/release/`.
 
 ## SDK
 
-- `ai.pleos.playground:Vehicle:2.3.2` — TurnSignal(CAR_LIGHTS), Gear(CAR_DRIVE), Seat(CAR_SEATS)
+- `ai.pleos.playground:Vehicle:2.3.2` — TurnSignal(CAR_LIGHTS), Gear(CAR_DRIVE), Seat(CAR_SEATS). 조회 권한만 쓴다.
 - `ai.pleos.playground:NaviHelper:3.0.5` — NAVI_ROUTE, NAVI_ROUTE_SEARCH
 - Maven: `https://nexus-playground.pleos.ai/repository/maven-releases/` (인증 불필요)
-
-## P0에서 확인할 것
-
-| # | 항목 | 로그 소스 |
-|---|---|---|
-| 0 | 에뮬레이터에 기본 내비가 있어 NaviHelper 이벤트가 오는가 | `[Navi]` |
-| 1 | 기어 P 전환 이벤트(주차 확인 후보) | `[Gear]` |
-| 2 | TBT 이벤트 주기와 `distance` 단위 | `[Navi] onTBTInfo` |
-| 4 | 재탐색 시 어떤 콜백이 오는가 | `[Navi] onReRouteEnded` |
-| 5 | 방향지시등 변경 구독 vs 상태 조회 | `[TurnSignal]` |
+- TTS SDK는 Playground에서 "준비 중"이라 발화는 화면 텍스트 + 플랫폼 TTS(있을 때만).

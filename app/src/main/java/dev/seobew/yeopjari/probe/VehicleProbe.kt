@@ -63,7 +63,9 @@ class VehicleProbe(
                 { log.log("TurnSignal", "capability", it) },
                 { log.log("TurnSignal", "capability FAILED", it) })
             getCurrentTurnSignalState(
-                { log.log("TurnSignal", "current", it); sink(CoachEvent.TurnSignalChanged(now(), (it ?: TurnSignalValue.OFF).toDomain())) },
+                { log.log("TurnSignal", "current", it)
+                  it?.let { v -> sink(CoachEvent.TurnSignalChanged(now(), v.toDomain())) }
+                      ?: sink(CoachEvent.SignalError(now(), "null turn signal state")) },
                 { log.log("TurnSignal", "current FAILED", it); sink(CoachEvent.SignalError(now(), it.toString())) })
             registerTurnSignalState(turnSignalListener)
         }

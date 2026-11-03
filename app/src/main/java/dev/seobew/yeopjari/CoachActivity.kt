@@ -89,6 +89,9 @@ class CoachActivity : AppCompatActivity() {
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f)
         })
         addView(bigButton(if (session.paused) "계속" else "일시정지", enabled = true) { session.togglePause() })
+        addView(gap(8))
+        // 주차(기어 P) 확인이 정상 경로지만, 에뮬레이터·시연에서 갇히지 않게 직접 끝내는 길을 둔다.
+        addView(bigButton("연습 종료", enabled = true) { session.finish() }.apply { alpha = 0.7f })
     }
 
     private fun reviewScreen(s: PracticeSession.Screen.Review): View = column {

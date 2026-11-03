@@ -26,4 +26,8 @@ sealed class CoachEvent {
     data class DestinationArrived(override val atMs: Long) : CoachEvent()
     /** 방향지시등 구독·조회 실패 등 관측 신뢰성이 깨진 순간. */
     data class SignalError(override val atMs: Long, val reason: String) : CoachEvent()
+    /** 운전자가 일시정지/재개. 정지 중엔 열린 구간을 제외하고 새 구간을 열지 않는다. */
+    data class PauseChanged(override val atMs: Long, val paused: Boolean) : CoachEvent()
+    /** 운전자가 연습을 직접 끝냄. 주차 확인 없이 복기로 넘어간다(열린 구간은 제외). */
+    data class PracticeEnded(override val atMs: Long) : CoachEvent()
 }

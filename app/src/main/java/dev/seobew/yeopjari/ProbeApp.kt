@@ -71,8 +71,6 @@ class ProbeApp : Application() {
         main.post {
             log.log("Event", event::class.simpleName ?: "?", event.toString().substringAfter('('))
             session.onEvent(event)
-            // 일시정지 중에는 새 평가 구간을 열지 않는다. 신호·기어는 계속 본다.
-            if (session.paused && event is CoachEvent.TbtUpdated) return@post
             engine.on(event)
         }
     }

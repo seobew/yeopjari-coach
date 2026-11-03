@@ -158,4 +158,39 @@ class CoachEngineTest {
         assertEquals(listOf(Outcome.CONFIRMED, Outcome.UNCONFIRMED), summary.results.map { it.outcome })
         assertEquals(listOf(1, 2), summary.results.map { it.key.ordinal })
     }
+
+    @Test fun `park with no closed segment still emits empty summary, but not outside a practice`() {
+        engine.on(CoachEvent.GearChanged(t++, GearState.PARK))
+        assertTrue(out.filterIsInstance<CoachOutput.Summary>().isEmpty())
+        start()
+        engine.on(CoachEvent.GearChanged(t++, GearState.PARK))
+        assertTrue(out.filterIsInstance<CoachOutput.Summary>().single().results.isEmpty())
+        engine.on(CoachEvent.GearChanged(t++, GearState.PARK))
+        assertEquals(1, out.filterIsInstance<CoachOutput.Summary>().size)
+    }
+
+    @Test fun `practice ended mid window excludes it and summarizes`() {
+        start()
+        tbt(right(140.0), arrive(640.0))
+        engine.on(CoachEvent.PracticeEnded(t++))
+        val summary = out.filterIsInstance<CoachOutput.Summary>().single()
+        assertEquals(listOf(Outcome.EXCLUDED), summary.results.map { it.outcome })
+        assertEquals(LevelState(), store.get(summary.results.single().key))
+    }
+
+    @Test fun `pause excludes open window and blocks new ones until resumed`() {
+        start()
+        tbt(right(140.0), left(600.0), arrive(900.0))
+        engine.on(CoachEvent.PauseChanged(t++, true))
+        assertEquals(Outcome.EXCLUDED, closed().single().outcome)
+        tbt(left(400.0), arrive(700.0))
+        tbt(left(120.0), arrive(420.0))
+        assertEquals(1, out.filterIsInstance<CoachOutput.SegmentOpened>().size)
+        engine.on(CoachEvent.PauseChanged(t++, false))
+        tbt(left(100.0), arrive(400.0))
+        signal(SignalState.LEFT)
+        tbt(arrive(300.0))
+        assertEquals(listOf(Outcome.EXCLUDED, Outcome.CONFIRMED), closed().map { it.outcome })
+        assertEquals(2, closed().last().key.ordinal)
+    }
 }

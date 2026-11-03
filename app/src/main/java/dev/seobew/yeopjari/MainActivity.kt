@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
  */
 class MainActivity : AppCompatActivity() {
     private val app get() = application as ProbeApp
+    private var onLine: ((String) -> Unit)? = null
+    private var onCoach: (() -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +26,11 @@ class MainActivity : AppCompatActivity() {
         val lines = TextView(this).apply { textSize = 13f; setPadding(24, 8, 24, 24) }
         val scroll = ScrollView(this).apply { addView(lines) }
 
-        app.log.onLine = { line ->
+        onLine = { line ->
             lines.append(line + "\n")
             scroll.post { scroll.fullScroll(ScrollView.FOCUS_DOWN) }
         }
-        app.onCoachChanged = {
+        onCoach = {
             say.text = app.lastSay
             summary.text = app.lastSummary
         }
@@ -60,9 +62,16 @@ class MainActivity : AppCompatActivity() {
         setOnClickListener { onClick() }
     }
 
-    override fun onDestroy() {
+    // 콜백은 resume/pause에서만 잡는다. onDestroy에서 지우면 뒤로 가기 때 이미 재개된 CoachActivity의 콜백까지 끊긴다.
+    override fun onResume() {
+        super.onResume()
+        app.log.onLine = onLine
+        app.onCoachChanged = onCoach
+    }
+
+    override fun onPause() {
         app.log.onLine = null
         app.onCoachChanged = null
-        super.onDestroy()
+        super.onPause()
     }
 }
