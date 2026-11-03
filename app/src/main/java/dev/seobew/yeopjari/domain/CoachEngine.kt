@@ -86,6 +86,8 @@ class CoachEngine(
     }
 
     private fun onTbt(turns: List<Turn>) {
+        // 연습 밖(복기 뒤·시작 전)의 내비 TBT는 평가하지 않는다 — 기록이 오염되고 발화가 새어 나간다.
+        if (!active) return
         val head = turns.firstOrNull()
         val headKey = head?.let { "${it.direction}|${it.description}" }
         if (headKey != lastHeadKey) {

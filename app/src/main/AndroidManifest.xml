@@ -21,6 +21,8 @@
             android:name=".CoachActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density"
             android:exported="true">
+            <!-- 주행 중 사용 허용(Android Automotive 표준 선언). 실측: 없으면 기어 D에서 플랫폼이 "주행 중에는 사용할 수 없습니다"로 앱을 덮는다. -->
+            <meta-data android:name="distractionOptimized" android:value="true" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -29,7 +31,9 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density"
-            android:exported="true" />
+            android:exported="true">
+            <meta-data android:name="distractionOptimized" android:value="true" />
+        </activity>
 
     </application>
 

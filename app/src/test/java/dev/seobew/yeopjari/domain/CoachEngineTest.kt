@@ -169,6 +169,17 @@ class CoachEngineTest {
         assertEquals(1, out.filterIsInstance<CoachOutput.Summary>().size)
     }
 
+    @Test fun `tbt outside a practice opens nothing and stores nothing`() {
+        engine.on(CoachEvent.TurnSignalChanged(t++, SignalState.OFF))
+        tbt(right(100.0), arrive(500.0))
+        start()
+        engine.on(CoachEvent.GearChanged(t++, GearState.PARK))
+        tbt(right(100.0), arrive(500.0))
+        tbt(arrive(400.0))
+        assertTrue(out.filterIsInstance<CoachOutput.SegmentOpened>().isEmpty())
+        assertTrue(store.map.isEmpty())
+    }
+
     @Test fun `practice ended mid window excludes it and summarizes`() {
         start()
         tbt(right(140.0), arrive(640.0))

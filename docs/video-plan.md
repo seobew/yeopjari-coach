@@ -38,6 +38,18 @@ Pleos TTS SDK는 준비 중이고 에뮬레이터에 플랫폼 TTS 엔진이 없
 6. 재탐색이나 신호 오류가 나면 그 구간은 감점 없이 평가에서 뺍니다.
 7. 주차가 확인된 뒤에만 복기를 엽니다. 관측 사실 하나와 다음 연습 하나만 말합니다.
 
+## 녹화 결과 (2026-11-03)
+
+`docs/video/scene0~4.mp4`(git 제외, 로컬), 스틸 `docs/video/stills/`. 장면표의 결과 문구가 로그와 모두 일치했다 (장면 1 "확인 1 / 평가 2", 장면 2 "확인 2 / 평가 2", 장면 3 "제외 2", 장면 4 실제 깜빡이로 확인 → 단계 0).
+
+녹화하며 알게 된 것:
+
+- **주행 제한.** 기어 D에서 플랫폼이 앱 위에 "주행 중에는 사용할 수 없습니다"를 띄운다. Activity에 `distractionOptimized=true` meta-data(Android Automotive 표준, Pleos 문서의 DO 선언)를 넣으면 풀린다. Pleos 가이드는 DO 앱이 `CarUxRestrictions`를 직접 확인하라고 하므로 실차 출시 전 대응 필요.
+- **release 빌드는 run-as 불가.** 로그는 `adb logcat -s YeopjariProbe`, 기록 초기화는 `adb shell pm clear --user 10 dev.seobew.yeopjari`.
+- 경로 요청을 누르면 내비 앱이 전면으로 올라온다. `am start -n dev.seobew.yeopjari/.CoachActivity` 뒤 BACK으로 복귀.
+- 선택 화면의 "개발자 화면" 버튼 위치는 연습 기록 줄 수에 따라 내려간다 (uiautomator dump로 좌표 확인).
+- 시나리오 ▶4·▶5 버튼은 가로 스크롤 뒤에 있다.
+
 ## 녹화 후
 
 ```bash
