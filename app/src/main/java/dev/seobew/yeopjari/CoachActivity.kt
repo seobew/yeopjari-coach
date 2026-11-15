@@ -64,7 +64,7 @@ class CoachActivity : AppCompatActivity() {
         // 막힌 이유를 버튼에 그대로 보여준다. 비활성 버튼은 롱프레스를 못 받아 enabled로 두고 클릭만 무시한다.
         addView(bigButton(blocker ?: "지금 내비 경로로 연습 시작", enabled = true) { if (session.blocker() == null) session.start() }
             .apply { alpha = if (blocker == null) 1f else 0.6f; setOnLongClickListener { session.devBypass = true; render(); true } })
-        addView(text("오늘 목표: 회전 전 깜빡이 · 안내는 예고만, 지시하지 않아요", 16f, dim = true))
+        addView(text("오늘 목표: 회전 전 깜빡이 · 회전 300m 전에 거울·레버·감속 순서로 안내해요", 16f, dim = true))
         addView(gap(24))
 
         val stats = session.routeStats()

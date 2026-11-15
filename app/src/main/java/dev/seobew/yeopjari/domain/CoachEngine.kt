@@ -20,7 +20,7 @@ sealed class CoachOutput {
  */
 class CoachEngine(
     private val store: PracticeStore,
-    private val windowOpenM: Double = 150.0,
+    private val windowOpenM: Double = 300.0,
     private val ambiguousGapM: Double = 30.0,
     private val emit: (CoachOutput) -> Unit,
 ) {
@@ -109,7 +109,7 @@ class CoachEngine(
 
         val level = store.get(key).level
         val announced = !ambiguous && !alreadyOn && level > LevelState.SILENT
-        if (announced) emit(CoachOutput.Say(level, phrase(level, head.direction)))
+        if (announced) emit(CoachOutput.Say(level, phrase(level, head.direction, head.distanceM)))
         emit(CoachOutput.SegmentOpened(key, level, announced))
     }
 
@@ -137,11 +137,19 @@ class CoachEngine(
     }
 
     companion object {
-        fun phrase(level: Int, direction: TurnDirection): String {
-            val word = if (direction == TurnDirection.LEFT) "좌회전" else "우회전"
+        /** 연수 순서대로 한 번에: 거리·방향 → 거울 확인 → 레버 조작 → 감속·차로 이동. 거리는 10m 단위로 내림.
+         *  방향지시등 레버는 운전대 왼쪽, 아래로 내리면 좌회전·위로 올리면 우회전(현대·기아 기준).
+         *  주변 차량·차선 상황은 앱이 볼 수 없으므로 "확인하라"고만 하고 판단은 운전자에게 맡긴다. */
+        fun phrase(level: Int, direction: TurnDirection, distanceM: Double): String {
+            val left = direction == TurnDirection.LEFT
+            val word = if (left) "좌회전" else "우회전"
+            val side = if (left) "왼쪽" else "오른쪽"
+            val lever = if (left) "아래로 내려" else "위로 올려"
+            val d = (distanceM / 10).toInt() * 10
             return when (level) {
-                LevelState.FULL -> "다음 $word, 깜빡이 준비예요."
-                LevelState.SHORT -> word
+                LevelState.FULL -> "${d}m 앞에서 ${word}이에요. 먼저 $side 거울로 뒤차를 확인하고, 왼쪽 레버를 $lever 깜빡이를 켜 주세요. " +
+                    "속도를 천천히 줄이면서 $side 차로로 미리 옮겨 두세요."
+                LevelState.SHORT -> "${d}m 앞 ${word}이에요. 거울 보시고, 레버는 ${if (left) "아래로 내려" else "위로 올려"} 주세요."
                 else -> ""
             }
         }

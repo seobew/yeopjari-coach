@@ -8,11 +8,12 @@
   "events": [
     { "t": 0,     "type": "routeStarted" },
     { "t": 300,   "type": "signal", "value": "OFF" },
-    { "t": 1000,  "type": "tbt", "turns": [["RIGHT", 420, "창업로40번길"], ["LEFT", 1300, "남부순환로"], ["OTHER", 2600, "도착"]] },
+    { "t": 1000,  "type": "tbt", "turns": [["RIGHT", 290, "창업로40번길"], ["LEFT", 1300, "남부순환로"], ["OTHER", 2600, "도착"]] },
     { "t": 4000,  "type": "tbt", "turns": [["RIGHT", 140, "창업로40번길"], ["LEFT", 1020, "남부순환로"], ["OTHER", 2320, "도착"]] },
     { "t": 6000,  "type": "signal", "value": "RIGHT" },
     { "t": 8000,  "type": "tbt", "turns": [["LEFT", 860, "남부순환로"], ["OTHER", 2160, "도착"]] },
     { "t": 9000,  "type": "signal", "value": "OFF" },
+    { "t": 10000, "type": "tbt", "turns": [["LEFT", 290, "남부순환로"], ["OTHER", 1590, "도착"]] },
     { "t": 12000, "type": "tbt", "turns": [["LEFT", 140, "남부순환로"], ["OTHER", 1440, "도착"]] },
     { "t": 14000, "type": "signal", "value": "LEFT" },
     { "t": 16000, "type": "tbt", "turns": [["OTHER", 1200, "도착"]] },

@@ -31,7 +31,7 @@ class CoachEngineTest {
         signal(SignalState.RIGHT)
         tbt(arrive(500.0))
         assertEquals(Outcome.CONFIRMED, closed().single().outcome)
-        assertEquals("다음 우회전, 깜빡이 준비예요.", said().single().text)
+        assertEquals("140m 앞에서 우회전이에요. 먼저 오른쪽 거울로 뒤차를 확인하고, 왼쪽 레버를 위로 올려 깜빡이를 켜 주세요. 속도를 천천히 줄이면서 오른쪽 차로로 미리 옮겨 두세요.", said().single().text)
     }
 
     @Test fun `no signal with healthy data is unconfirmed`() {
@@ -132,7 +132,7 @@ class CoachEngineTest {
         drive(Outcome.CONFIRMED)
         assertEquals(LevelState(1, 0), store.get(key))
         drive(Outcome.CONFIRMED)
-        assertEquals("우회전", said().last().text)
+        assertEquals("100m 앞 우회전이에요. 거울 보시고, 레버는 위로 올려 주세요.", said().last().text)
         drive(Outcome.CONFIRMED)
         assertEquals(LevelState(0, 0), store.get(key))
         drive(Outcome.CONFIRMED)
