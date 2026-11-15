@@ -2,11 +2,15 @@
 
 **한 줄 소개:** 연수를 마친 초보 운전자가 자주 다니는 경로를 반복 연습할 때, 회전 구간별로 깜빡이 준비를 예고하고 행동이 유지된 구간부터 코치 안내를 줄여 가는 차량용 앱. 현대차·기아 차량용 앱 개발 공모전 출품작.
 
-**APK:** `apk/yeopjari_옆자리코치_release.apk` (release 빌드, 디버그 키 서명)
+**APK:** `apk/스튜디오빛_옆자리코치_release.apk` (release 빌드, 디버그 키 서명)
+
+**테스트 환경:** Pleos Connect Emulator v2.1.0 (AVD `pleos_connect_2_1_0`, 화면 1024x768, Android Automotive, 에뮬레이터 유저 10). 자체 서버·API 키 없음.
+
+**시연 영상:** 접수 메일 첨부 (장면 5개 화면 녹화 3분, 음성 없음). 장면 구성은 `docs/video-plan.md`.
 
 ## 심사용 실행 절차 (Pleos Connect Emulator v2.1.0)
 
-1. 설치: `adb install -r apk/yeopjari_옆자리코치_release.apk` 후 런처에서 "옆자리 코치" 실행.
+1. 설치: `adb install -r apk/스튜디오빛_옆자리코치_release.apk` 후 런처에서 "옆자리 코치" 실행.
 2. 선택 화면 하단 **개발자 화면** → **경로 요청**. 기본 내비에 샘플 경로(42dot)가 잡히고, 돌아오면 "내비 목적지: 42dot"이 보인다.
 3. 시작 조건은 **정차(기어 P) + 안전벨트**다. 에뮬레이터는 벨트 신호가 항상 미착용이라 **시작 버튼을 길게 누르면** 조건을 우회한다.
 4. 에뮬레이터는 차량 이동을 만들 수 없어(내비가 NMEA만 쓰고 에뮬 GNSS HAL 체크섬이 틀림) 주행 중 회전 안내(TBT)는 개발자 화면의 **▶ 1~5 시나리오**로 대신한다. 방향지시등·기어는 Virtual Console(또는 `tools/vconsole.sh turn BlinkRight`, `gear Park`)로 실제 신호를 넣는다.

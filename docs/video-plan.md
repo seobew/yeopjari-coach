@@ -10,7 +10,7 @@
 # 직전 크래시 뒤엔 크래시 리포트 전송 대화상자가 부팅을 막는다 → DB 삭제 + -no-metrics
 rm -f /tmp/android-$USER/emu-crash-*.db
 ~/Library/Android/sdk/emulator/emulator -avd pleos_connect_2_1_0 -no-snapshot -no-boot-anim -no-metrics &
-adb install -r apk/yeopjari_옆자리코치_release.apk
+adb install -r apk/스튜디오빛_옆자리코치_release.apk
 adb shell pm clear --user 10 dev.seobew.yeopjari   # 기록 초기화 (release는 run-as 불가)
 # 화면 녹화 (최대 3분, 장면마다 따로)
 adb shell screenrecord --time-limit 60 /sdcard/scene1.mp4 &

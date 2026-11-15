@@ -8,3 +8,5 @@ local.properties
 .externalNativeBuild
 .cxx
 docs/video/*.mp4
+docs/접수양식_옆자리코치_*.docx
+docs/접수양식_옆자리코치_*.pdf
